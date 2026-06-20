@@ -2,7 +2,7 @@ import axios from "axios";
 import { useAuthStore } from "../store/authStore";
 
 const axiosClient = axios.create({
-  baseURL: "/api",              // Vite proxy forwards this to localhost:5000
+  baseURL: "https://feature1-auth-backend.onrender.com/api",              // Vite proxy forwards this to localhost:5000
   headers: { "Content-Type": "application/json" },
 });
 
