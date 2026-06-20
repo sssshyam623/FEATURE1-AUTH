@@ -1,55 +1,29 @@
-name: CI
+frontend:
+  name: Frontend (install + build + test)
+  runs-on: ubuntu-latest
+  defaults:
+    run:
+      working-directory: ./frontend
 
-on:
-  push:
-    branches: [master]
-  pull_request:
-    branches: [master]
+  steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
 
-jobs:
-  backend:
-    name: Backend (install + test)
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./backend
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 24
 
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+    - name: Install frontend dependencies
+      run: |
+        rm -rf node_modules package-lock.json
+        npm install
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 24
+    - name: Run frontend tests
+      run: echo "No frontend tests yet"
 
-      - name: Install backend dependencies
-        run: npm install
+    - name: Give Vite permission
+      run: chmod +x node_modules/.bin/vite
 
-      - name: Run backend tests
-        run: echo "No backend tests yet"
-
-  frontend:
-    name: Frontend (install + build + test)
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./frontend
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 24
-
-      - name: Install frontend dependencies
-        run: npm install
-
-      - name: Run frontend tests
-        run: echo "No frontend tests yet"
-
-      - name: Build frontend
-        run: npm run build
+    - name: Build frontend
+      run: npm run build
