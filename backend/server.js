@@ -17,7 +17,7 @@ app.use(helmet());
 app.use(morgan("dev"));
 
 // ── CORS ─────────────────────────────────────
-app.use(cors({ origin: "https://feature1-auth-frontend.onrender.com/", credentials: true }));
+app.use(cors({ origin: "https://feature1-auth-frontend.onrender.com", credentials: true }));
 
 // ── Rate Limiting ─────────────────────────────
 const limiter = rateLimit({
