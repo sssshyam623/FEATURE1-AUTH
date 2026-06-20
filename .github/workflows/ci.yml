@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   pull_request:
-    branches: [master]
+    branches: [main]
 
 jobs:
   backend:
@@ -44,6 +44,9 @@ jobs:
 
       - name: Install frontend dependencies
         run: npm install
+
+      - name: Fix executable permissions
+        run: chmod +x node_modules/.bin/*
 
       - name: Build frontend
         run: npm run build
