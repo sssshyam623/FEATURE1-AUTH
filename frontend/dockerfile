@@ -1,0 +1,28 @@
+# ---- Build stage ----
+FROM node:20-alpine AS build
+
+WORKDIR /app
+
+# Copy package files and install
+COPY package*.json ./
+RUN npm install
+
+# Copy all source code
+COPY . .
+
+# Build the app (outputs static files to /app/dist)
+RUN npm run build
+
+# ---- Serve stage ----
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Lightweight static file server
+RUN npm install -g serve
+
+# Copy only the built output from the previous stage
+COPY --from=build /app/dist ./dist
+
+EXPOSE 3000
+CMD ["serve", "-s", "dist", "-l", "3000"]
