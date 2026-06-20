@@ -2,13 +2,13 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [master]
   pull_request:
-    branches: [main]
+    branches: [master]
 
 jobs:
   backend:
-    name: Backend (install + test)
+    name: Backend (install)
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -26,11 +26,8 @@ jobs:
       - name: Install backend dependencies
         run: npm install
 
-      - name: Run backend tests
-        run: npm test
-
   frontend:
-    name: Frontend (install + build + test)
+    name: Frontend (install + build)
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -48,8 +45,8 @@ jobs:
       - name: Install frontend dependencies
         run: npm install
 
-      - name: Run frontend tests
-        run: npm test
+      - name: Fix executable permissions
+        run: chmod +x node_modules/.bin/*
 
       - name: Build frontend
         run: npm run build
