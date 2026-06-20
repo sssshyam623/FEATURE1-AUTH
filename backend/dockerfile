@@ -1,6 +1,7 @@
-# ---- Build stage ----
-FROM node:20-alpine AS build
+# Use Node.js base image
+FROM node:20-alpine
 
+# Set working directory
 WORKDIR /app
 
 # Copy package files and install
@@ -10,19 +11,6 @@ RUN npm install
 # Copy all source code
 COPY . .
 
-# Build the app (outputs static files to /app/dist)
-RUN npm run build
-
-# ---- Serve stage ----
-FROM node:20-alpine
-
-WORKDIR /app
-
-# Lightweight static file server
-RUN npm install -g serve
-
-# Copy only the built output from the previous stage
-COPY --from=build /app/dist ./dist
-
-EXPOSE 3000
-CMD ["serve", "-s", "dist", "-l", "3000"]
+# Expose port and start
+EXPOSE 5000
+CMD ["npm", "start"]
